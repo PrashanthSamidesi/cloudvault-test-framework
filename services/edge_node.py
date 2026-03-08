@@ -1,6 +1,6 @@
 import logging
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 
 os.makedirs("logs", exist_ok=True)
 
@@ -39,7 +39,7 @@ class EdgeNode:
             "filename": filename,
             "content": content,
             "size": len(content),
-            "cached_at": datetime.utcnow().isoformat(),
+            "cached_at": datetime.now(timezone.utc).isoformat(),
             "synced": False
         }
         self.sync_queue.append(filename)

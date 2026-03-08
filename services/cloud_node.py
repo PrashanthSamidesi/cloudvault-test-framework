@@ -1,7 +1,7 @@
 import uuid
 import logging
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 
 # Create logs directory if it doesn't exist
 os.makedirs("logs", exist_ok=True)
@@ -42,7 +42,7 @@ class CloudNode:
             "filename": filename,
             "content": content,
             "size": len(content),
-            "uploaded_at": datetime.utcnow().isoformat(),
+            "uploaded_at": datetime.now(timezone.utc).isoformat(),
             "node": self.node_id
         }
         logger.info(f"File '{filename}' uploaded successfully. ID: {file_id}")

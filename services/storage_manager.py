@@ -1,6 +1,6 @@
 import logging
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 
 os.makedirs("logs", exist_ok=True)
 
@@ -46,7 +46,7 @@ class StorageManager:
                 "edge_node": target_edge.node_id,
                 "cache_status": cache_result["status"],
                 "sync_status": "success" if filename in sync_result["synced"] else "failed",
-                "timestamp": datetime.utcnow().isoformat()
+                "timestamp": datetime.now(timezone.utc).isoformat()
             }
         else:
             # Direct cloud write if no edge node available
@@ -58,7 +58,7 @@ class StorageManager:
                 "cache_status": "skipped",
                 "sync_status": "direct_upload",
                 "file_id": upload_result["file_id"],
-                "timestamp": datetime.utcnow().isoformat()
+                "timestamp": datetime.now(timezone.utc).isoformat()
             }
 
         self.operation_history.append(operation)
