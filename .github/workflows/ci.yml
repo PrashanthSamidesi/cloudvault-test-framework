@@ -1,4 +1,3 @@
-cat > .github/workflows/ci.yml << 'EOF'
 name: CloudVault Test Automation CI
 
 on:
@@ -12,7 +11,6 @@ jobs:
   test:
     name: Run CloudVault Test Suite
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -22,27 +20,18 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Cache pip Dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Create Runtime Directories
-        run: |
-          mkdir -p logs reports
+        run: mkdir -p logs reports
 
-      - name: Run File Upload Tests
+      - name: Run Upload Tests
         run: pytest tests/test_file_upload.py -v --tb=short
 
-      - name: Run File Sync Tests
+      - name: Run Sync Tests
         run: pytest tests/test_file_sync.py -v --tb=short
 
       - name: Run Integration Tests
@@ -51,11 +40,8 @@ jobs:
       - name: Run Regression Tests
         run: pytest tests/test_regression.py -v --tb=short
 
-      - name: Run Full Suite and Generate Report
-        run: |
-          pytest tests/ -v --tb=short \
-            --html=reports/test_report.html \
-            --self-contained-html
+      - name: Run Full Suite
+        run: pytest tests/ -v --tb=short --html=reports/test_report.html --self-contained-html
 
       - name: Upload Test Report
         uses: actions/upload-artifact@v4
@@ -74,7 +60,6 @@ jobs:
   lint:
     name: Code Quality Check
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -88,11 +73,4 @@ jobs:
         run: pip install flake8
 
       - name: Run Flake8 Linter
-        run: |
-          flake8 services/ utils/ tests/ \
-            --max-line-length=100 \
-            --exclude=venv,__pycache__ \
-            --extend-ignore=E501,W503 \
-            --statistics \
-            --count
-EOF
+        run: flake8 services/ utils/ tests/ --max-line-length=100 --extend-ignore=E501,W503
