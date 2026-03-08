@@ -34,7 +34,7 @@ class CloudNode:
             raise ConnectionError(f"CloudNode '{self.node_id}' is offline.")
 
         if not filename or not content:
-            logger.warning(f"Invalid upload attempt — filename or content is empty.")
+            logger.warning("Invalid upload attempt — filename or content is empty.")
             raise ValueError("Filename and content cannot be empty.")
 
         file_id = str(uuid.uuid4())

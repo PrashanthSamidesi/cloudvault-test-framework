@@ -169,7 +169,7 @@ class TestIntegration:
             cloud_node=cloud_node,
             edge_nodes=[edge1, edge2, edge3]
         )
-        health = storage_manager = manager.get_system_health()
+        health = manager.get_system_health()
 
         assert len(health["edge_nodes"]) == 3
         assert all(e["status"] == "online" for e in health["edge_nodes"])
