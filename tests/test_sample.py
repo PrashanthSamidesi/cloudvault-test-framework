@@ -20,12 +20,12 @@ def test_upload_delete_download(cloud_node):
 
     with pytest.raises(FileNotFoundError):
         cloud_node.download_file(value)
-        
-    
+
+
 def test_cache_file(edge_node):
     result = edge_node.cache_file("Nasuni_Database.java", "This is a sample java file...")
     assert result["status"] == "cached"
-    assert result["synced"] == False
+    assert result["synced"] is False
 
 
 def test_cache_count(edge_node):
