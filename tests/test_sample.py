@@ -108,10 +108,11 @@ def test_storage_node_nohint(storage_manager, filename, content):
     result = storage_manager.get_system_health()
     assert result["total_operations"] == 1
 
+
 def test_sample(cloud_node, storage_manager, edge_node):
-    result = cloud_node.upload_file("hero.java","Learning Java")
+    result = cloud_node.upload_file("hero.java", "Learning Java")
     assert result["status"] == "uploaded"
-    main = storage_manager.write_file("hero.java","Now changing the file content")
+    main = storage_manager.write_file("hero.java", "Now changing the file content")
     assert main["sync_status"] == "success"
 
     edge_node.simulate_failure()
