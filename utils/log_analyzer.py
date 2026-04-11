@@ -8,7 +8,6 @@ class LogAnalyzer:
     """
     Analyzes CloudVault test logs to detect failures, warnings,
     and patterns useful for debugging distributed system issues.
-    Mirrors real-world log analysis done by SDETs at Nasuni.
     """
 
     def __init__(self, log_file_path: str = "logs/cloudvault.log"):

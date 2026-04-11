@@ -107,3 +107,15 @@ def test_storage_node_nohint(storage_manager, filename, content):
     storage_manager.write_file(filename, content)
     result = storage_manager.get_system_health()
     assert result["total_operations"] == 1
+
+def test_sample(cloud_node, storage_manager, edge_node):
+    result = cloud_node.upload_file("hero.java","Learning Java")
+    assert result["status"] == "uploaded"
+    main = storage_manager.write_file("hero.java","Now changing the file content")
+    assert main["sync_status"] == "success"
+
+    edge_node.simulate_failure()
+    with pytest.raises(ConnectionError):
+        edge_node.cache_file("hero.java", "Trying to cache during failure")
+    edge_node.restore()
+    result = edge_node.sync_to_cloud(cloud_node)

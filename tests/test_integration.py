@@ -8,7 +8,6 @@ class TestIntegration:
     """
     End-to-end integration test suite for the CloudVault distributed system.
     Validates cross-component behaviors through the StorageManager orchestrator.
-    Mirrors real-world distributed file system validation at Nasuni.
     """
 
     def test_full_write_cycle_edge_to_cloud(self, storage_manager, edge_node):
