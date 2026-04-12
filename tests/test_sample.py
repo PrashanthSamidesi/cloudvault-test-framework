@@ -120,3 +120,4 @@ def test_sample(cloud_node, storage_manager, edge_node):
         edge_node.cache_file("hero.java", "Trying to cache during failure")
     edge_node.restore()
     result = edge_node.sync_to_cloud(cloud_node)
+ 
